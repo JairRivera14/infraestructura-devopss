@@ -111,7 +111,7 @@ resource "aws_security_group" "web_sg" {
 
 # --- Jump Server (Linux) ---
 resource "aws_instance" "jump_server" {
-  ami                    = "ami-00a929b66ed6e0de6" # Amazon Linux 2
+  ami                    = "ami-07a6f770277670015" # Amazon Linux 2
   instance_type          = "t2.micro"
   subnet_id              = aws_subnet.subnet_public.id
   vpc_security_group_ids = [aws_security_group.jump_sg.id]
@@ -124,26 +124,21 @@ resource "aws_instance" "jump_server" {
 }
 
 # --- Web Servers (Linux x3) ---
-resource "aws_instance" "web_server" {
-  count                  = 4
-  ami                    = "ami-00a929b66ed6e0de6" # Amazon Linux 2
-  instance_type          = "t2.micro"
-  subnet_id              = aws_subnet.subnet_public.id
-  vpc_security_group_ids = [aws_security_group.web_sg.id]
+resource "aws_instance" "web_test" {
+  ami           = "ami-07a6f770277670015"
+  instance_type = "t2.micro"
+  subnet_id     = aws_subnet.subnet_ext.id
+  key_name      = "vockey" # Cámbialo si no existe
   associate_public_ip_address = true
-  key_name               = "vockey"
+  vpc_security_group_ids = [aws_security_group.sg_web.id]
 
   user_data = <<-EOF
               #!/bin/bash
-              yum update -y
-              yum install -y httpd
-              systemctl start httpd
-              systemctl enable httpd
-              echo "<h1>Servidor Web ${count.index + 1}</h1>" > /var/www/html/index.html
+              echo "Instancia lanzada correctamente" > /var/tmp/test.txt
               EOF
 
   tags = {
-    Name = "Web_server-${count.index + 1}"
+    Name = "web_test_instance"
   }
 }
 
