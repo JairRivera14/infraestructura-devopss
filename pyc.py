@@ -1,4 +1,3 @@
-<<<<<<< HEAD:pyc.py
 
 import os
 
