@@ -72,7 +72,7 @@ def crear_pagina():
 
     run("sudo mv /tmp/index.html /var/www/html/index.html")
 
-if _name_ == "_main_":
+if __name__ == "__main__":
 
     instalar_apache()
 
