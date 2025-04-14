@@ -74,4 +74,4 @@ if __name__ == "__main__":
     instalar_apache()
 
     crear_pagina()
->>>>>>> abab3d5 (corregir script):py.py
+
